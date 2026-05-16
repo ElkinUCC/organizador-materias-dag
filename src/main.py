@@ -1,61 +1,123 @@
 from dag import DAG
 
-# Crear objeto DAG
-dag = DAG()
 
-# Agregar materias
-dag.add_node("Programación 1")
-dag.add_node("Matemáticas Discretas")
-dag.add_node("Estructura de Datos")
-dag.add_node("Algoritmos")
+def main():
+    """
+    Función principal del programa.
+    """
 
-# Agregar prerrequisitos
-dag.add_edge("Programación 1", "Estructura de Datos")
-dag.add_edge("Matemáticas Discretas", "Estructura de Datos")
-dag.add_edge("Estructura de Datos", "Algoritmos")
+    # ==================================================
+    # CREAR GRAFO
+    # ==================================================
 
-##prueba de ciclos
-#dag.add_edge("Algoritmos", "Programación 1")
+    dag = DAG()
 
-# Mostrar grafo
-dag.print_graph()
+    # ==================================================
+    # AGREGAR MATERIAS
+    # ==================================================
 
-# Mostrar in-degree
-print("\nIN-DEGREE:\n")
-print(dag.in_degree)
+    dag.add_node("Programación 1")
+    dag.add_node("Matemáticas Discretas")
+    dag.add_node("Estructura de Datos")
+    dag.add_node("Algoritmos")
 
-# Orden topológico
-order = dag.topological_sort()
+    # ==================================================
+    # AGREGAR PRERREQUISITOS
+    # ==================================================
 
-print("\nORDEN TOPOLOGICO:\n")
-print(order)
+    dag.add_edge(
+        "Programación 1",
+        "Estructura de Datos"
+    )
 
-# Detectar ciclos
-print("\n¿EL GRAFO TIENE CICLOS?\n")
+    dag.add_edge(
+        "Matemáticas Discretas",
+        "Estructura de Datos"
+    )
 
-if dag.has_cycle():
-    print("Sí hay ciclos")
-else:
-    print("No hay ciclos")
+    dag.add_edge(
+        "Estructura de Datos",
+        "Algoritmos"
+    )
 
-# Materias aprobadas
-#prueba
-approved = [
-    "Programación 1",
-    "Matemáticas Discretas",
-    "Estructura de Datos"
-]
+    # ==================================================
+    # PRUEBA DE CICLO
+    # ==================================================
 
-# Buscar disponibles
-available = dag.available_subjects(approved)
+    # Descomentar para probar ciclos
 
-print("\nMATERIAS DISPONIBLES:\n")
-print(available)
+    # dag.add_edge(
+    #     "Algoritmos",
+    #     "Programación 1"
+    # )
 
-# Calcular niveles
-levels = dag.calculate_levels()
+    # ==================================================
+    # MOSTRAR GRAFO
+    # ==================================================
 
-print("\nNIVELES DE LAS MATERIAS:\n")
+    dag.print_graph()
 
-for subject, level in levels.items():
-    print(f"{subject}: Semestre {level}")
+    # ==================================================
+    # MOSTRAR IN-DEGREE
+    # ==================================================
+
+    print("\nIN-DEGREE:\n")
+    print(dag.in_degree)
+
+    # ==================================================
+    # ORDEN TOPOLOGICO
+    # ==================================================
+
+    order = dag.topological_sort()
+
+    print("\nORDEN TOPOLOGICO:\n")
+    print(order)
+
+    # ==================================================
+    # DETECTAR CICLOS
+    # ==================================================
+
+    print("\n¿EL GRAFO TIENE CICLOS?\n")
+
+    if dag.has_cycle():
+        print("Sí hay ciclos")
+    else:
+        print("No hay ciclos")
+
+    # ==================================================
+    # MATERIAS APROBADAS
+    # ==================================================
+
+    approved = [
+        "Programación 1",
+        "Matemáticas Discretas",
+        "Estructura de Datos"
+    ]
+
+    # ==================================================
+    # MATERIAS DISPONIBLES
+    # ==================================================
+
+    available = dag.available_subjects(approved)
+
+    print("\nMATERIAS DISPONIBLES:\n")
+    print(available)
+
+    # ==================================================
+    # CALCULAR NIVELES
+    # ==================================================
+
+    levels = dag.calculate_levels()
+
+    print("\nNIVELES DE LAS MATERIAS:\n")
+
+    for subject, level in levels.items():
+        print(f"{subject}: Semestre {level}")
+
+
+# ======================================================
+# EJECUCION PRINCIPAL
+# ======================================================
+
+if __name__ == "__main__":
+    main()
