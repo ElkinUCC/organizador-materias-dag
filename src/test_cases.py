@@ -1,18 +1,33 @@
 from dag import DAG
 
 
+# ==================================================
+# PRUEBA DAG VALIDO
+# ==================================================
+
 def test_valid_dag():
 
     print("\n===== PRUEBA DAG VALIDO =====\n")
 
     dag = DAG()
 
-    # Materias
-    dag.add_edge("Programación 1", "Estructura de Datos")
-    dag.add_edge("Matemáticas", "Estructura de Datos")
-    dag.add_edge("Estructura de Datos", "Algoritmos")
+    # Agregar relaciones
+    dag.add_edge(
+        "Programación 1",
+        "Estructura de Datos"
+    )
 
-    # Verificar ciclo
+    dag.add_edge(
+        "Matemáticas",
+        "Estructura de Datos"
+    )
+
+    dag.add_edge(
+        "Estructura de Datos",
+        "Algoritmos"
+    )
+
+    # Verificar ciclos
     print("¿Tiene ciclos?")
     print(dag.has_cycle())
 
@@ -24,6 +39,14 @@ def test_valid_dag():
     print("\nNiveles:")
     print(dag.calculate_levels())
 
+    # Camino crítico
+    print("\nCamino crítico:")
+    print(dag.critical_path())
+
+
+# ==================================================
+# PRUEBA CON CICLO
+# ==================================================
 
 def test_cycle_detection():
 
@@ -44,15 +67,30 @@ def test_cycle_detection():
     print(dag.topological_sort())
 
 
+# ==================================================
+# PRUEBA MATERIAS DISPONIBLES
+# ==================================================
+
 def test_available_subjects():
 
     print("\n===== PRUEBA MATERIAS DISPONIBLES =====\n")
 
     dag = DAG()
 
-    dag.add_edge("Programación 1", "Estructura de Datos")
-    dag.add_edge("Matemáticas", "Estructura de Datos")
-    dag.add_edge("Estructura de Datos", "Algoritmos")
+    dag.add_edge(
+        "Programación 1",
+        "Estructura de Datos"
+    )
+
+    dag.add_edge(
+        "Matemáticas",
+        "Estructura de Datos"
+    )
+
+    dag.add_edge(
+        "Estructura de Datos",
+        "Algoritmos"
+    )
 
     approved = [
         "Programación 1",
@@ -66,7 +104,10 @@ def test_available_subjects():
     print(dag.available_subjects(approved))
 
 
-# Ejecutar pruebas
+# ==================================================
+# EJECUTAR PRUEBAS
+# ==================================================
+
 test_valid_dag()
 test_cycle_detection()
 test_available_subjects()

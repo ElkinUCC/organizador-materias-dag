@@ -236,3 +236,59 @@ El proyecto también permitió identificar cómo los grafos son utilizados en si
 - La combinación de estructuras de datos y algoritmos permite resolver problemas reales de planificación.
 
 Además, el proyecto fortaleció conocimientos prácticos sobre grafos, complejidad algorítmica y organización modular de aplicaciones en Python.
+
+# 8. Preguntas de Reflexión
+
+## 1. ¿Qué diferencia hay entre el orden topológico y un recorrido BFS/DFS normal?
+
+Un recorrido BFS o DFS simplemente visita los nodos del grafo siguiendo una estrategia de exploración. En cambio, el orden topológico genera una secuencia válida respetando las dependencias entre nodos.
+
+En el caso de las materias universitarias, el orden topológico garantiza que una asignatura aparezca únicamente después de haber cursado todos sus prerrequisitos.
+
+---
+
+## 2. ¿Puede haber múltiples órdenes topológicos válidos para una misma malla? ¿Cuándo ocurre?
+
+Sí. Un DAG puede tener múltiples órdenes topológicos válidos cuando existen materias independientes que no tienen dependencias directas entre sí.
+
+Por ejemplo, dos materias iniciales sin prerrequisitos pueden aparecer en diferente orden sin afectar la validez del resultado.
+
+---
+
+## 3. ¿Cómo cambiaría el modelo si una materia puede cursarse de forma paralela a su prerrequisito?
+
+El modelo dejaría de representar dependencias estrictas. En ese caso, las aristas deberían representar restricciones parciales o condiciones flexibles.
+
+Además, algunas validaciones del orden topológico tendrían que modificarse, ya que no todas las dependencias serían obligatorias antes de cursar una materia.
+
+---
+
+## 4. ¿Qué pasa con el orden topológico si el grafo tiene ciclos? ¿Qué hace tu algoritmo en ese caso?
+
+Si el grafo tiene ciclos, no existe un orden topológico válido, porque las dependencias se vuelven imposibles de cumplir.
+
+El algoritmo implementado detecta esta situación comparando la cantidad de nodos procesados con el total de nodos del grafo. Si no coinciden, se muestra un mensaje de error indicando que existe un ciclo.
+
+---
+
+## 5. ¿Cómo validaste que tu orden topológico es correcto? ¿Qué casos de prueba diseñaste?
+
+La validación se realizó mediante diferentes casos de prueba:
+
+- DAG válido sin ciclos
+- Grafo con ciclo intencional
+- Materias con múltiples prerrequisitos
+- Verificación de materias disponibles
+- Validación de niveles académicos
+
+También se comprobó que las materias aparecieran en el orden correcto respetando sus dependencias.
+
+---
+
+## 6. ¿Qué parte del algoritmo de Kahn fue más difícil de explicarle a la IA para que lo implementara correctamente?
+
+La parte más difícil fue comprender correctamente la dirección de las aristas y el manejo del in-degree.
+
+Inicialmente existía confusión sobre si la relación debía representarse desde la materia hacia el prerrequisito o viceversa. Después de analizar ejemplos reales de materias universitarias, se comprendió que la arista debe ir desde el prerrequisito hacia la materia dependiente.
+
+También fue importante entender cómo el algoritmo reduce el in-degree de los vecinos durante el recorrido BFS.

@@ -1,4 +1,5 @@
 from dag import DAG
+from visualizer import draw_graph
 
 
 def main():
@@ -90,8 +91,7 @@ def main():
 
     approved = [
         "Programación 1",
-        "Matemáticas Discretas",
-        "Estructura de Datos"
+        "Matemáticas Discretas"
     ]
 
     # ==================================================
@@ -113,6 +113,31 @@ def main():
 
     for subject, level in levels.items():
         print(f"{subject}: Semestre {level}")
+
+    # ==================================================
+    # CAMINO CRITICO
+    # ==================================================
+
+    critical = dag.critical_path()
+
+    print("\nCAMINO CRITICO:\n")
+    print(critical)
+
+    # ==================================================
+    # PRUEBA ELIMINAR MATERIA
+    # ==================================================
+
+    print("\nELIMINANDO MATERIA:\n")
+
+    dag.delete_node("Algoritmos")
+
+    dag.print_graph()
+
+    # ==================================================
+    # VISUALIZAR GRAFO
+    # ==================================================
+
+    draw_graph(dag)
 
 
 # ======================================================

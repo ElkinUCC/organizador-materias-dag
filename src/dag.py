@@ -99,6 +99,55 @@ class DAG:
         self.in_degree[subject] += 1
 
     # ==================================================
+    # ELIMINAR NODO
+    # ==================================================
+
+    def delete_node(self, subject):
+        """
+        Elimina una materia del grafo.
+
+        También elimina todas las conexiones
+        relacionadas con la materia.
+        """
+
+        # Verificar si existe
+        if subject not in self.graph:
+
+            print(f"\nLa materia '{subject}' no existe.\n")
+            return
+
+        # ==============================================
+        # ELIMINAR CONEXIONES ENTRANTES
+        # ==============================================
+
+        for node in self.graph:
+
+            if subject in self.graph[node]:
+
+                # Eliminar conexión
+                self.graph[node].remove(subject)
+
+                # Reducir in-degree
+                self.in_degree[subject] -= 1
+
+        # ==============================================
+        # ELIMINAR CONEXIONES SALIENTES
+        # ==============================================
+
+        for neighbor in self.graph[subject]:
+
+            self.in_degree[neighbor] -= 1
+
+        # ==============================================
+        # ELIMINAR NODO
+        # ==============================================
+
+        del self.graph[subject]
+        del self.in_degree[subject]
+
+        print(f"\nMateria '{subject}' eliminada correctamente.\n")
+
+    # ==================================================
     # MOSTRAR GRAFO
     # ==================================================
 
@@ -343,3 +392,86 @@ class DAG:
                     queue.append(neighbor)
 
         return levels
+
+    # ==================================================
+    # CAMINO CRITICO
+    # ==================================================
+
+    def critical_path(self):
+        """
+        Calcula el camino crítico del DAG.
+
+        Retorna:
+            Lista con la secuencia más larga
+            de dependencias.
+        """
+
+        # Obtener orden topológico
+        topological_order = self.topological_sort()
+
+        # Si hay ciclo
+        if not topological_order:
+            return []
+
+        # ==============================================
+        # DISTANCIAS
+        # ==============================================
+
+        # Distancia máxima hasta cada nodo
+        distance = {}
+
+        # Nodo anterior
+        previous = {}
+
+        # Inicializar distancias
+        for subject in self.graph:
+
+            distance[subject] = 0
+            previous[subject] = None
+
+        # ==============================================
+        # RECORRER EN ORDEN TOPOLOGICO
+        # ==============================================
+
+        for subject in topological_order:
+
+            for neighbor in self.graph[subject]:
+
+                # Si encontramos camino más largo
+                if distance[subject] + 1 > distance[neighbor]:
+
+                    # Actualizar distancia
+                    distance[neighbor] = (
+                        distance[subject] + 1
+                    )
+
+                    # Guardar nodo anterior
+                    previous[neighbor] = subject
+
+        # ==============================================
+        # BUSCAR NODO FINAL
+        # ==============================================
+
+        end_node = max(
+            distance,
+            key=distance.get
+        )
+
+        # ==============================================
+        # RECONSTRUIR CAMINO
+        # ==============================================
+
+        critical_path = []
+
+        current = end_node
+
+        while current is not None:
+
+            critical_path.append(current)
+
+            current = previous[current]
+
+        # Invertir camino
+        critical_path.reverse()
+
+        return critical_path
