@@ -37,3 +37,25 @@ if dag.has_cycle():
     print("Sí hay ciclos")
 else:
     print("No hay ciclos")
+
+# Materias aprobadas
+#prueba
+approved = [
+    "Programación 1",
+    "Matemáticas Discretas",
+    "Estructura de Datos"
+]
+
+# Buscar disponibles
+available = dag.available_subjects(approved)
+
+print("\nMATERIAS DISPONIBLES:\n")
+print(available)
+
+# Calcular niveles
+levels = dag.calculate_levels()
+
+print("\nNIVELES DE LAS MATERIAS:\n")
+
+for subject, level in levels.items():
+    print(f"{subject}: Semestre {level}")

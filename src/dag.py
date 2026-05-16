@@ -152,3 +152,87 @@ class DAG:
                     return True
 
         return False
+    
+    def available_subjects(self, approved_subjects):
+        """
+        Retorna las materias disponibles
+        según las materias aprobadas
+        """
+
+        available = []
+
+        # Revisar todas las materias
+        for subject in self.graph:
+
+            # Ignorar materias ya aprobadas
+            if subject in approved_subjects:
+                continue
+
+            # Buscar prerrequisitos
+            prerequisites = []
+
+            for node in self.graph:
+
+                if subject in self.graph[node]:
+                    prerequisites.append(node)
+
+            # Verificar si todos los prerrequisitos
+            # están aprobados
+            valid = True
+
+            for prerequisite in prerequisites:
+
+                if prerequisite not in approved_subjects:
+                    valid = False
+                    break
+
+            # Si cumple todo
+            if valid:
+                available.append(subject)
+
+        return available
+    
+    def calculate_levels(self):
+        """
+        Calcula el nivel (semestre mínimo)
+        de cada materia
+        """
+
+        # Copia del in-degree
+        in_degree_copy = self.in_degree.copy()
+
+        # Cola BFS
+        queue = deque()
+
+        # Diccionario de niveles
+        levels = {}
+
+        # Inicializar nodos fuente
+        for subject in self.graph:
+
+            if in_degree_copy[subject] == 0:
+
+                queue.append(subject)
+
+                # Materias iniciales = nivel 1
+                levels[subject] = 1
+
+        # BFS
+        while queue:
+
+            current = queue.popleft()
+
+            # Revisar vecinos
+            for neighbor in self.graph[current]:
+
+                # Reducir in-degree
+                in_degree_copy[neighbor] -= 1
+
+                # Actualizar nivel
+                levels[neighbor] = levels[current] + 1
+
+                # Si queda libre
+                if in_degree_copy[neighbor] == 0:
+                    queue.append(neighbor)
+
+        return levels
