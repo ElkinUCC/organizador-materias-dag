@@ -45,12 +45,12 @@ def main():
     # PRUEBA DE CICLO
     # ==================================================
 
-    # Descomentar para probar ciclos
+     ##Descomentar para probar ciclos
 
-    # dag.add_edge(
-    #     "Algoritmos",
-    #     "Programación 1"
-    # )
+    #dag.add_edge(
+         #"Algoritmos",
+         #"Programación 1"
+     #)
 
     # ==================================================
     # MOSTRAR GRAFO

@@ -56,7 +56,7 @@ def test_cycle_detection():
 
     dag.add_edge("A", "B")
     dag.add_edge("B", "C")
-    dag.add_edge("C", "A")
+    #dag.add_edge("C", "A")
 
     # Detectar ciclo
     print("¿Tiene ciclos?")

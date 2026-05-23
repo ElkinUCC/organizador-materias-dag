@@ -1,20 +1,3 @@
-"""
-Proyecto: Organizador de Materias Universitarias usando DAG
-
-Autor:
-Elkin Augusto Amador Padilla
-
-Descripción:
-Implementación de un Grafo Dirigido Acíclico (DAG)
-para modelar prerrequisitos académicos.
-
-Incluye:
-- Ordenamiento topológico (Kahn)
-- Detección de ciclos (DFS)
-- Materias disponibles
-- Cálculo de niveles académicos
-"""
-
 from collections import deque
 
 
@@ -44,7 +27,7 @@ class DAG:
         # Lista de adyacencia
         self.graph = {}
 
-        # Grado de entrada de cada nodo
+        # Grado de entrada de cada nodo 
         self.in_degree = {}
 
     # ==================================================
@@ -180,7 +163,7 @@ class DAG:
         # para no modificar el original
         in_degree_copy = self.in_degree.copy()
 
-        # Cola BFS
+        # Cola BFS (guardo materias listas para cursar)
         queue = deque()
 
         # Lista resultado
@@ -250,7 +233,7 @@ class DAG:
         # ==============================================
         # DFS AUXILIAR
         # ==============================================
-
+##funcion recursiva
         def dfs(node):
 
             # Nodo en proceso
